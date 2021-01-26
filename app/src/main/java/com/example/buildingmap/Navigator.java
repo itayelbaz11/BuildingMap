@@ -46,9 +46,9 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
     LocationRequest locationRequest;
 
     private SensorManager sensorManager;
-    Sensor accelerometer;
+    Sensor gyroscope;
 
-    String x,y,z;
+   String x,y,z;
 
     Sensor mStepCounter;
     boolean isCounterSensorPresent;
@@ -89,8 +89,8 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
 
 
         sensorManager=(SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(Navigator.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        gyroscope=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        sensorManager.registerListener(Navigator.this,gyroscope,SensorManager.SENSOR_DELAY_NORMAL);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -132,7 +132,7 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
             stepCount++;
             tv.setText(String.valueOf(stepCount));
         }}
-        if(sensorEvent.sensor.getType()==Sensor.TYPE_ACCELEROMETER) {
+        if(sensorEvent.sensor.getType()==Sensor.TYPE_GYROSCOPE) {
             x=String.valueOf(sensorEvent.values[0]);
             y=String.valueOf(sensorEvent.values[1]);
             z=String.valueOf(sensorEvent.values[2]);
