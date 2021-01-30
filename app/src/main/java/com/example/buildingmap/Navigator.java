@@ -46,7 +46,8 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
     LocationRequest locationRequest;
 
     private SensorManager sensorManager;
-    Sensor gyroscope;
+    Sensor accelerometer;
+    Sensor magnometer;
 
    String x,y,z;
 
@@ -54,6 +55,8 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
     boolean isCounterSensorPresent;
     int stepCount=0;
 
+    float[] mGravity,mGeomagnetic;
+    float azimuth,rotation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,8 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
 
         }
 
+        m[x1][y1]=1;
+
         locationRequest=new LocationRequest();
         locationRequest.setInterval(30000);
         locationRequest.setFastestInterval(5000);
@@ -89,8 +94,10 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
 
 
         sensorManager=(SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        gyroscope=sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        sensorManager.registerListener(Navigator.this,gyroscope,SensorManager.SENSOR_DELAY_NORMAL);
+        accelerometer=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(Navigator.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        magnometer=sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        sensorManager.registerListener(Navigator.this,magnometer,SensorManager.SENSOR_DELAY_NORMAL);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -113,11 +120,12 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
      * a button that starts the location finding in this moment.
      */
     public void btn(View view) {
-        X.setText("X:"+x);
+        X.setText("rotation"+rotation);
         Y.setText("Y:"+y);
         Z.setText("Z:"+z);
         stepCount=0;
         tv.setText(""+stepCount);
+
 
     }
 
@@ -129,14 +137,45 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
         if(sensorEvent.sensor.getType()==Sensor.TYPE_STEP_COUNTER){
 
         if(sensorEvent.sensor==mStepCounter){
-            stepCount++;
-            tv.setText(String.valueOf(stepCount));
+            if(rotation>=22.5&&rotation<=157.5){
+                x1++;
+            }
+            if(rotation>=202.5&&rotation<=337.5){
+                x1--;
+            }
+            if(rotation >=292.5||rotation<=67.5){
+                y1++;
+            }
+            if(rotation>=112.5&&rotation<=247.5){
+                y1--;
+            }
+            m[x1][y1]=1;
         }}
         if(sensorEvent.sensor.getType()==Sensor.TYPE_GYROSCOPE) {
             x=String.valueOf(sensorEvent.values[0]);
             y=String.valueOf(sensorEvent.values[1]);
             z=String.valueOf(sensorEvent.values[2]);
 
+        }
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            mGravity = sensorEvent.values;
+
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            mGeomagnetic = sensorEvent.values;
+
+        if (mGravity != null && mGeomagnetic != null) {
+            float R[] = new float[9];
+            float I[] = new float[9];
+
+            if (SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic)) {
+
+                // orientation contains azimut, pitch and roll
+                float orientation[] = new float[3];
+                SensorManager.getOrientation(R, orientation);
+
+                azimuth = orientation[0];
+                rotation = (float) (( Math.toDegrees( azimuth ) + 360 ) % 360);
+            }
         }
     }
 
