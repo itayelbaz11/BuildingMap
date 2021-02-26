@@ -68,24 +68,14 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
 
 
 
-        X=(TextView) findViewById(R.id.x);
-        Y=(TextView) findViewById(R.id.y);
-        Z=(TextView) findViewById(R.id.z);
-        tv=(TextView) findViewById(R.id.tv);
 
         /**
          * Set all properties of locationRequest.
          */
 
-        for(int i=0;i<1000;i++) {
-            for(int j=0;j<1000;j++) {
-                m[i][j]=0;
 
-            }
 
-        }
 
-        m[x1][y1]=1;
 
         locationRequest=new LocationRequest();
         locationRequest.setInterval(30000);
@@ -119,14 +109,23 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
     /**
      * a button that starts the location finding in this moment.
      */
-    public void btn(View view) {
-        X.setText("rotation"+rotation);
-        Y.setText("Y:"+y);
-        Z.setText("Z:"+z);
-        stepCount=0;
-        tv.setText(""+stepCount);
+    public void start(View view) {
+       oM();
 
 
+    }
+
+    public void oM(){
+        for(int i=0;i<1000;i++) {
+            for(int j=0;j<1000;j++) {
+                m[i][j]=0;
+
+            }
+
+        }
+        x1=500;
+        y1=500;
+        m[x1][y1]=1;
     }
 
 
@@ -202,13 +201,9 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
         }
     }
 
-    /**
-     * COUNTING
-     * @param view
-     */
-    public void start(View view) {
-        stepCount=0;
-        tv.setText(""+stepCount);
+
+    public void Stop(View view) {
+        
     }
 }
 

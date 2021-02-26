@@ -23,85 +23,36 @@
             android:layout_weight="30"/>
 
 
-        <TextView
-            android:id="@+id/tv4"
+        <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text="accelerometer:"
-            android:textSize="20dp"/>
+            android:layout_weight="10"
+            android:text="start"
+            android:onClick="start"/>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"/>
+            android:layout_weight="30"/>
 
-        <TextView
-            android:id="@+id/x"
+        <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text="X:"
-            android:textSize="20dp"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-        <TextView
-            android:id="@+id/y"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text="Y:"
-            android:textSize="20dp"/>
+            android:layout_weight="10"
+            android:text="stop"
+            android:onClick="Stop"/>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-        <TextView
-            android:id="@+id/z"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text="Z:"
-            android:textSize="20dp"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-        <TextView
-            android:id="@+id/tv7"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text="STEPS"
-            android:textSize="20dp"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"/>
-
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:text=""
-            android:textSize="20dp"/>
+            android:layout_weight="30"/>
 
         <Button
             android:id="@+id/btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
-            android:text="get location"
+            android:text="bitmap"
             android:onClick="btn"/>
 
         <Space
