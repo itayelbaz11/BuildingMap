@@ -48,12 +48,24 @@
             android:layout_weight="30"/>
 
         <Button
-            android:id="@+id/btn"
+            android:id="@+id/pic"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
             android:text="bitmap"
-            android:onClick="btn"/>
+            android:onClick="pic"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="100"
+             />
 
         <Space
             android:layout_width="match_parent"
