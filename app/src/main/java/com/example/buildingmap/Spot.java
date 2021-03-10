@@ -36,15 +36,30 @@ public class Spot {
         int j=this.j;
 
         if(i<grid.length-1){
-            this.neighbors.add(grid[i+1][j]);}
+            this.neighbors.add(grid[i+1][j]);
+            if(j>0){
+                this.neighbors.add(grid[i+1][j-1]);
+            }
+            if(j<grid[0].length){
+                this.neighbors.add(grid[i+1][j+1]);
+            }
+        }
 
         if(i>0){
-        this.neighbors.add(grid[i-1][j]);}
+            this.neighbors.add(grid[i-1][j]);
+            if(j>0){
+                this.neighbors.add(grid[i-1][j-1]);
+            }
+            if(j<grid[0].length){
+                this.neighbors.add(grid[i-1][j+1]);
+            }}
 
         if(j<grid[0].length-1){
         this.neighbors.add(grid[i][j+1]);}
 
         if(j>0){
         this.neighbors.add(grid[i][j-1]);}
+
+
     }
 }
