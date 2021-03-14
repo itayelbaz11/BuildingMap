@@ -6,8 +6,18 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Main2Activity extends AppCompatActivity {
+
+    final int N=1;
+    final int NE=2;
+    final int E=3;
+    final int SE=4;
+    final int S=5;
+    final int SW=6;
+    final int W=7;
+    final int NW=8;
 
     Spot[][] grid;
     ArrayList<Spot> openSet=new ArrayList<Spot>();
@@ -16,6 +26,7 @@ public class Main2Activity extends AppCompatActivity {
     Spot end;
     boolean nosolution=false;
     boolean keepgoing=true;
+
 
 
     @Override
@@ -40,8 +51,8 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 
-    public void pathFinding(Spot start,Spot end,Spot[][] grid){
-        ArrayList<Spot> path=new ArrayList<Spot>();
+    public Stack<Spot> pathFinding(Spot start, Spot end, Spot[][] grid){
+        Stack<Spot> path=new Stack<Spot>();
         openSet.add(start);
         while(keepgoing){
         if(!openSet.isEmpty()){
@@ -55,7 +66,7 @@ public class Main2Activity extends AppCompatActivity {
             if(current==end){
                 Spot tempS=current;
                 while (tempS!=null){
-                    path.add(tempS.previous);
+                    path.push(tempS.previous);
                     tempS=tempS.previous;
                 }
                 keepgoing=false;
@@ -98,8 +109,61 @@ public class Main2Activity extends AppCompatActivity {
             //no solution
         }
 
-    }}
+       }
+    return path;
+    }
     public double heuristic(Spot n,Spot end){
       return Math.sqrt(Math.pow((n.i-end.i),2)+Math.pow((n.j-end.j),2));
+    }
+
+
+    public ArrayList<Vector> vectorPath(Stack<Spot> S){
+        ArrayList<Vector> vPath=new ArrayList<Vector>();
+        Spot current;
+        int currentD=0;
+        int temp;
+        int steps=0;
+        while (!S.isEmpty()){
+            current=S.pop();
+            temp=getDirection(current.i,S.peek().i,current.j,S.peek().j);
+            if(temp!=currentD){
+                vPath.add(new Vector(currentD,steps));
+                currentD=temp;
+                steps=1;
+            }
+            else {
+                steps++;
+            }
+        }
+        return vPath;
+    }
+    public int getDirection(int x0,int y0,int xE,int yE){
+        int dX=xE-x0;
+        int dY=yE-y0;
+        int direction=0;
+        switch (dX){
+            case 1: {
+                switch (dY){
+                    case 1: direction=NE;break;
+                    case 0: direction=E; break;
+                    case -1: direction=SE;break;
+                }
+                }
+            case 0:{
+                switch (dY){
+                    case 1: direction= N;break;
+                    case -1: direction=S;break;
+                }
+
+            }
+            case -1:{
+                switch (dY){
+                    case 1: direction= NW;break;
+                    case 0: direction= W; break;
+                    case -1: direction=SW;break;
+                }
+            }
+        }
+        return direction;
     }
 }
