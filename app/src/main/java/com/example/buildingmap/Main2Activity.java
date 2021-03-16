@@ -1,11 +1,16 @@
 package com.example.buildingmap;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Main2Activity extends AppCompatActivity {
@@ -20,8 +25,6 @@ public class Main2Activity extends AppCompatActivity {
     final int NW=8;
 
     Spot[][] grid;
-    ArrayList<Spot> openSet=new ArrayList<Spot>();
-    ArrayList<Spot> closedSet=new ArrayList<Spot>();
     Spot start;
     Spot end;
     boolean nosolution=false;
@@ -52,7 +55,10 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public Stack<Spot> pathFinding(Spot start, Spot end, Spot[][] grid){
-        Stack<Spot> path=new Stack<Spot>();
+        Stack<Spot> path=new Stack<>();
+        ArrayList<Spot> openSet=new ArrayList<Spot>();
+        ArrayList<Spot> closedSet=new ArrayList<Spot>();
+
         openSet.add(start);
         while(keepgoing){
         if(!openSet.isEmpty()){
@@ -110,15 +116,15 @@ public class Main2Activity extends AppCompatActivity {
         }
 
        }
-    return path;
+    return reverseS(path);
     }
     public double heuristic(Spot n,Spot end){
       return Math.sqrt(Math.pow((n.i-end.i),2)+Math.pow((n.j-end.j),2));
     }
 
 
-    public ArrayList<Vector> vectorPath(Stack<Spot> S){
-        ArrayList<Vector> vPath=new ArrayList<Vector>();
+    public Stack<Vector> vectorPath(Stack<Spot> S){
+        Stack<Vector> vPath=new Stack<>();
         Spot current;
         int currentD=0;
         int temp;
@@ -127,7 +133,7 @@ public class Main2Activity extends AppCompatActivity {
             current=S.pop();
             temp=getDirection(current.i,S.peek().i,current.j,S.peek().j);
             if(temp!=currentD){
-                vPath.add(new Vector(currentD,steps));
+                vPath.push(new Vector(currentD,steps));
                 currentD=temp;
                 steps=1;
             }
@@ -148,7 +154,7 @@ public class Main2Activity extends AppCompatActivity {
                     case 0: direction=E; break;
                     case -1: direction=SE;break;
                 }
-                }
+            }
             case 0:{
                 switch (dY){
                     case 1: direction= N;break;
@@ -166,4 +172,12 @@ public class Main2Activity extends AppCompatActivity {
         }
         return direction;
     }
+
+   public Stack<Spot> reverseS(Stack<Spot> s1){
+        Stack<Spot> s2=new Stack<Spot>();
+        while(!s1.isEmpty()){
+            s2.push(s1.pop());
+        }
+        return s2;
+   }
 }
