@@ -15,14 +15,14 @@ import java.util.Stack;
 
 public class Main2Activity extends AppCompatActivity {
 
-    final int N=1;
-    final int NE=2;
-    final int E=3;
-    final int SE=4;
-    final int S=5;
-    final int SW=6;
-    final int W=7;
-    final int NW=8;
+    final int N=0;
+    final int NE=1;
+    final int E=2;
+    final int SE=3;
+    final int S=4;
+    final int SW=5;
+    final int W=6;
+    final int NW=7;
 
     Spot[][] grid;
     Spot start;
@@ -143,10 +143,19 @@ public class Main2Activity extends AppCompatActivity {
         }
         return vPath;
     }
+
+    /**
+     * this method gets two spot's coordinations and returns the relvative direction.
+     * @param x0
+     * @param y0
+     * @param xE
+     * @param yE
+     * @return
+     */
     public int getDirection(int x0,int y0,int xE,int yE){
         int dX=xE-x0;
         int dY=yE-y0;
-        int direction=0;
+        int direction=-1;
         switch (dX){
             case 1: {
                 switch (dY){
@@ -173,6 +182,11 @@ public class Main2Activity extends AppCompatActivity {
         return direction;
     }
 
+    /**
+     * this method reverses a Stack.
+     * @param s1
+     * @return
+     */
    public Stack<Spot> reverseS(Stack<Spot> s1){
         Stack<Spot> s2=new Stack<Spot>();
         while(!s1.isEmpty()){
@@ -180,4 +194,6 @@ public class Main2Activity extends AppCompatActivity {
         }
         return s2;
    }
+
+
 }

@@ -32,6 +32,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.security.Permissions;
+import java.util.Stack;
 
 public class Navigator extends AppCompatActivity  implements SensorEventListener{
 
@@ -193,18 +194,7 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
                         bitmap.setPixel(x1,y1,Color.BLACK);
                     }
                 }
-                if(rotation>67.5&&rotation<112.5){
-                    for(int i=0;i<3;i++){
-                        x1++;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
-                    }
-                }
-                if(rotation>67.5&&rotation<112.5){
-                    for(int i=0;i<3;i++){
-                        x1++;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
-                    }
-                }
+
                 if(rotation>157.5&&rotation<202.5){
                     for(int i=0;i<3;i++){
                         y1--;
