@@ -140,9 +140,9 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
     }
 
     public void oM(){
-        bitmap=createImage(1000,1000, Color.WHITE);
-        x1=500;
-        y1=500;
+        bitmap=createImage(100  ,100, Color.WHITE);
+        x1=50;
+        y1=50;
         bitmap.setPixel(x1,y1,Color.BLACK);
 
     }
@@ -157,64 +157,65 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
         if(sensorEvent.sensor.getType()==Sensor.TYPE_STEP_COUNTER){
 
         if(sensorEvent.sensor==mStepCounter){
-            steps++;
-            if(steps==3){
-                steps=0;
-                if(rotation>=22.5&&rotation<=67.5){
-                   for(int i=0;i<2;i++){
-                       x1++;
-                       y1++;
-                       bitmap.setPixel(x1,y1,Color.BLACK);
-                   }
-                }
-                if(rotation>=112.5&&rotation<=157.5){
-                    for(int i=0;i<2;i++){
-                        x1++;
-                        y1--;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
+            if(stst) {
+                steps++;
+                if (steps == 3) {
+                    steps = 0;
+                    if (rotation >= 22.5 && rotation <= 67.5) {
+                        for (int i = 0; i < 2; i++) {
+                            x1++;
+                            y1--;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
                     }
-                }
-                if(rotation>=202.5&&rotation<=247.5){
-                    for(int i=0;i<2;i++){
-                        x1--;
-                        y1--;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
+                    if (rotation >= 112.5 && rotation <= 157.5) {
+                        for (int i = 0; i < 2; i++) {
+                            x1++;
+                            y1++;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
                     }
-                }
-                if(rotation>=292.5&&rotation<=337.5){
-                    for(int i=0;i<2;i++){
-                        x1--;
-                        y1++;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
+                    if (rotation >= 202.5 && rotation <= 247.5) {
+                        for (int i = 0; i < 2; i++) {
+                            x1--;
+                            y1++;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
                     }
-                }
-                if(rotation>67.5&&rotation<112.5){
-                    for(int i=0;i<3;i++){
-                        x1++;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
+                    if (rotation >= 292.5 && rotation <= 337.5) {
+                        for (int i = 0; i < 2; i++) {
+                            x1--;
+                            y1--;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
                     }
-                }
+                    if (rotation > 67.5 && rotation < 112.5) {
+                        for (int i = 0; i < 3; i++) {
+                            x1++;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
+                    }
 
-                if(rotation>157.5&&rotation<202.5){
-                    for(int i=0;i<3;i++){
-                        y1--;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
+                    if (rotation > 157.5 && rotation < 202.5) {
+                        for (int i = 0; i < 3; i++) {
+                            y1++;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
+                    }
+                    if (rotation > 247.5 && rotation < 292.5) {
+                        for (int i = 0; i < 3; i++) {
+                            x1--;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
+                    }
+                    if (rotation > 337.5 || rotation < 22.5) {
+                        for (int i = 0; i < 3; i++) {
+                            y1--;
+                            bitmap.setPixel(x1, y1, Color.BLACK);
+                        }
                     }
                 }
-                if(rotation>247.5&&rotation<292.5){
-                    for(int i=0;i<3;i++){
-                        x1--;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
-                    }
-                }
-                if(rotation >337.5||rotation<22.5){
-                    for(int i=0;i<3;i++){
-                        y1++;
-                        bitmap.setPixel(x1,y1,Color.BLACK);
-                    }
-                }
-                }
-
+            }
         }}
         if(sensorEvent.sensor.getType()==Sensor.TYPE_GYROSCOPE) {
             x=String.valueOf(sensorEvent.values[0]);
@@ -269,7 +270,8 @@ public class Navigator extends AppCompatActivity  implements SensorEventListener
 
 
     public void Stop(View view) {
-        bmp=Bitmap.createBitmap(bitmap);
+        imageView.setImageBitmap(bitmap);
+        stst=false;
 
     }
 

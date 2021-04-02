@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void navigator(View view) {
-        Intent si=new Intent(this,Navigator.class);
+        Intent si=new Intent(this,Main2Activity.class);
         startActivity(si);
     }
 

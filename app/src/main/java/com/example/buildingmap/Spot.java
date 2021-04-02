@@ -40,7 +40,7 @@ public class Spot {
             if(j>0){
                 this.neighbors.add(grid[i+1][j-1]);
             }
-            if(j<grid[0].length){
+            if(j<grid[0].length-1){
                 this.neighbors.add(grid[i+1][j+1]);
             }
         }
@@ -50,7 +50,7 @@ public class Spot {
             if(j>0){
                 this.neighbors.add(grid[i-1][j-1]);
             }
-            if(j<grid[0].length){
+            if(j<grid[0].length-1){
                 this.neighbors.add(grid[i-1][j+1]);
             }}
 
