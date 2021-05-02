@@ -52,7 +52,7 @@ public class Main2Activity extends AppCompatActivity {
 
         b=createImage(50,50, Color.YELLOW);
 
-        grid1=new Spot[4][4];
+        grid1=new Spot[5][5];
         for(int i1=0;i1<grid1.length;i1++){
             for(int j1=0;j1<grid1[0].length;j1++){
                  grid1[i1][j1]=new Spot(i1,j1,false);
@@ -63,9 +63,14 @@ public class Main2Activity extends AppCompatActivity {
                 grid1[i2][j2].addNeighbors(grid1);
             }
         }
-        grid1[2][0].wall=true;
+        grid1[1][0].wall=true;
+        grid1[1][2].wall=true;
+        grid1[3][1].wall=true;
+        grid1[2][4].wall=true;
+        grid1[1][4].wall=true;
+        grid1[4][3].wall=true;
         start=grid1[0][0];
-        end=grid1[3][0];
+        end=grid1[4][1];
 
 
     }
@@ -89,10 +94,10 @@ public class Main2Activity extends AppCompatActivity {
         }
     }
 
-    public Stack<Spot> pathFinding(Spot start, Spot end, Spot[][] grid){
+    public ArrayList<Spot> pathFinding(Spot start, Spot end, Spot[][] grid){
         b=createImage(50,50, Color.YELLOW);
        // visual(grid,b);
-        Stack<Spot> path=new Stack<>();
+        ArrayList<Spot> path=new ArrayList<Spot>();
         ArrayList<Spot> openSet=new ArrayList<Spot>();
         ArrayList<Spot> closedSet=new ArrayList<Spot>();
         boolean nosolution=false;
@@ -115,13 +120,12 @@ public class Main2Activity extends AppCompatActivity {
                    while (tempS != null) {
                        e++;
                        tv.setText(e + "");
-                       path.push(tempS);
+                       path.add(tempS);
                        b.setPixel(tempS.i, tempS.j, Color.RED);
                        tempS = tempS.previous;
                        //
                    }
               // }
-                b.setPixel(tempS.i,tempS.j,Color.BLACK);
                 Toast.makeText(Main2Activity.this, "DONE!", Toast.LENGTH_SHORT).show();
                 keepgoing=false;
                 //done!!
@@ -168,7 +172,7 @@ public class Main2Activity extends AppCompatActivity {
         }
 
        }
-    return reverseS(path);
+    return path;
     }
 
     public double heuristic(Spot n,Spot end){
@@ -176,25 +180,28 @@ public class Main2Activity extends AppCompatActivity {
     }
 
 
-    public Stack<Vector> vectorPath(Stack<Spot> S){
-        Stack<Vector> vPath=new Stack<>();
-        Spot current;
+    public Stack<Vector> vectorPath(ArrayList<Spot> path){
+        ArrayList<Vector> vPath=new ArrayList<Vector>();
+        Spot current,peek;
         int currentD=0;
         int temp;
         int steps=0;
-        while (!S.isEmpty()){
-            current=S.pop();
-            temp=getDirection(current.i,S.peek().i,current.j,S.peek().j);
+        while (!path.isEmpty()){
+            current=path.remove(0);
+            if (!path.isEmpty()){
+            peek=path.get(0);
+            temp=getDirection(current.i,current.j,peek.i,peek.j);
             if(temp!=currentD){
-                vPath.push(new Vector(currentD,steps));
+                vPath.add(new Vector(currentD,steps));
                 currentD=temp;
                 steps=1;
             }
             else {
                 steps++;
             }
+            }
         }
-        return vPath;
+        return listToStack(vPath);
     }
 
     /**
@@ -208,7 +215,7 @@ public class Main2Activity extends AppCompatActivity {
     public int getDirection(int x0,int y0,int xE,int yE){
         int dX=xE-x0;
         int dY=yE-y0;
-        int direction=-1;
+        int direction=20;
         switch (dX){
             case 1: {
                 switch (dY){
@@ -248,13 +255,17 @@ public class Main2Activity extends AppCompatActivity {
         return s2;
    }
 
+   public Stack<Vector> listToStack(ArrayList<Vector> arrayList){
+       Stack<Vector> S=new Stack<Vector>();
+       while (!arrayList.isEmpty()){
+           S.push(arrayList.remove(0));
+       }
+       return S;
+   }
+
 
     public void sssss(View view) {
-       Stack<Spot> S=pathFinding(start,end,grid1);
-        Spot tempS1=new Spot(1,1,false);
+       ArrayList<Spot> S=pathFinding(start,end,grid1);
         imageView2.setImageBitmap(b);
-        if(!S.isEmpty())
-           tempS1=S.pop();
-           tv.setText(tempS1.i+""+tempS1.j);
     }
 }

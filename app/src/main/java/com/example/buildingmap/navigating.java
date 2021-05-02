@@ -110,19 +110,28 @@ public class navigating extends AppCompatActivity implements SensorEventListener
     }
 
     public void navigationU(Stack<Vector> path){
+        Vector popV;
         while(!path.isEmpty()){
             while(path.peek().steps!=0){
                 // לעשות גרפיקה של כמות צעדים וכיוון!!!!!!
                 if(stepsB){
+                    stepsB=false;
+                    Vector peekV=path.peek();
                     int direction=directionGet(rotation);
-                    if(direction==path.peek().direction){
+                    if(direction==peekV.direction){
                         path.peek().steps--;
                     }
                     else{
-                        path.push(new Vector((direction+4)%8,1));
+                        if(direction==(peekV.direction+4)%8){
+                            peekV.steps++;
+                        }
+                        else{
+                            path.push(new Vector((direction+4)%8,1));
+                        }
                     }
                 }
             }
+            popV=path.pop();
         }
         //הגעת ליעד!!!!!!!!
     }
